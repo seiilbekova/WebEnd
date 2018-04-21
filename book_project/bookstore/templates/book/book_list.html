@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+  
+{% block content %}
+      
+      <div class="well">
+        <h1> There are
+          {% if book_list|length > 1 %}
+            {{book_list|length}} books
+          {% elif book_list|length == 1 %}
+            {{book_list|length}} book
+          {% else %}
+            no books
+          {% endif %}
+        </h1>
+
+        {% for book in book_list %}
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h2><a href="{% url 'books:book_details' book_id=book.id %}">{{book}}</a></h2>
+              <h4>{{book.autor}}</h4>
+              <a href="{% url 'books:book_edit' book_id=book.id%}"><button>Edit</button></a>
+              <p class="pull-right">{{book.created_at}}</p>
+            </div>
+          </div>
+           <a href="{% url 'books:delete_book' book_id=book.id %}"><button>Delete</button></a>
+      {% endfor %}
+      </div>
+
+{% endblock content %}
